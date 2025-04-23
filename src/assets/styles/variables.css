@@ -1,0 +1,19 @@
+ /* Глобальные CSS переменные */
+
+:root {
+    --root-background-color: #e6f0ec;
+    --root-text-color: #000000;
+    --root-font-weight: var(--font-weight-regular);
+    
+    --font-size-s: 12px;
+    --font-size-m: 14px;
+    --font-size-l: 16px;
+    --font-size-xl: 20px;
+    --font-size-xxl: 24px;
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+}

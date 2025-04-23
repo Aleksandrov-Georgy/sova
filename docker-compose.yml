@@ -1,10 +1,14 @@
+version: '3.8'
 services:
-  vue-app:
+  app:
     build: .
     ports:
       - "5173:5173"
     volumes:
-      - .:/app
+      - ./:/app
       - /app/node_modules
     environment:
+      - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
+    working_dir: /app
+    command: ["yarn", "dev"]
