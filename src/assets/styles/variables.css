@@ -4,6 +4,10 @@
     --root-background-color: #e6f0ec;
     --root-text-color: #000000;
     --root-font-weight: var(--font-weight-regular);
+
+    --backround-modal: #ffffff;
+    --background-modal-window: rgba(0, 0, 0, 0.2);
+    --modal-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     
     --font-size-s: 12px;
     --font-size-m: 14px;
