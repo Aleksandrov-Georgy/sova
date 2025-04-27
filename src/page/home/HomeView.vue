@@ -1,41 +1,49 @@
 <template>
-  <h1>HomeView</h1>
+  <el-tabs class="tabs" v-model="initialTab" @tab-click="handleTabClick">
+    <el-tab-pane
+        v-for="tab in tabs"
+        :key="tab.name"
+        :label="tab.label"
+        :name="tab.name"
+    >
+      <component :is="tab.component" />
+    </el-tab-pane>
+  </el-tabs>
 
-  <button @click="openModal('form')">Форма обратной связи</button>
-  <button @click="openRightModal('profile')">Профиль</button>
-
-  <ModalWrapperWrapper>
+  <ModalWrapper>
     <component :is="modals[modalStore.currentModal]"/>
-  </ModalWrapperWrapper>
-
-  <RightModalWrapper>
-    <component :is="rightModals[modalStore.currentRightModal]"/>
-  </RightModalWrapper>
+  </ModalWrapper>
   <Loader/>
 </template>
 
 <script setup>
-import ModalWrapperWrapper from "@/components/shared/ModalWrapper.vue";
-import RightModalWrapper from "@/components/shared/RightModalWrapper.vue";
-import {useModalStore} from "@/stores/modal";
+import { ref } from 'vue';
+
+import Home from '@/components/homePage/Home.vue'
+import Loader from "@/components/shared/Loader.vue";
+import {useModalStore} from "@/stores/modal.js";
 import FeedBack from "@/components/form/FeedBack.vue";
 import Profile from "@/components/profile/Profile.vue";
-import Loader from "@/components/shared/Loader.vue";
+import ModalWrapper from "@/components/shared/ModalWrapper.vue";
 
 const modalStore = useModalStore();
+const initialTab = ref('home');
 
 const modals = {
   form: FeedBack,
-};
-const rightModals = {
   profile: Profile,
 };
 
-const openModal = (modalName) => {
-  modalStore.showModal(modalName);
-};
+const tabs = [
+  { name: 'home', label: 'Главная', component: Home },
+  { name: 'profile', label: 'Профиль', component: Profile },
+];
 
-const openRightModal = (modalName) => {
-  modalStore.showModalRight(modalName);
-};
 </script>
+
+<style scoped>
+.tabs {
+  display: flex;
+ align-items: center;
+}
+</style>
