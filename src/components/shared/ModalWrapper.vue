@@ -37,6 +37,7 @@ useKeyboard((e: KeyboardEvent) => {
   background: var(--background-modal-window);
   position: fixed;
   inset: 0;
+  z-index: 1000000;
 }
 
 .modal {

@@ -12,8 +12,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client"],
-    "composite": true
+    "types": ["vite/client", "element-plus/global"],
+    "composite": true,
   },
   "include": [
     "src/**/*.ts",

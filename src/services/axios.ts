@@ -6,6 +6,7 @@ const api = axios.create({
 });
 
 const cacheProducts = new Map<string, IProduct[]>();
+const totalItemsCache = 50;
 
 export class API {
 
@@ -17,7 +18,7 @@ export class API {
     static async getProducts(quantity = 20, page = 1): Promise<IProduct[]> {
         const url = `products?_quantity=${quantity}&page=${page}`;
 
-        if(cacheProducts.size === 10) {
+        if(cacheProducts.size === totalItemsCache) {
             cacheProducts.clear();
         }
 

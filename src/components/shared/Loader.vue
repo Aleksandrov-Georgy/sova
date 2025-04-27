@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useConfig} from "@/stores/config";
 
-const config = useConfig(); // false
+const config = useConfig();
 </script>
 
 <template>
@@ -25,7 +25,7 @@ const config = useConfig(); // false
   background: var(--background-modal-window);
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 99999;
 }
 
 .loader {
@@ -39,7 +39,7 @@ const config = useConfig(); // false
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #3498db;
+  background-color: var(--color-loader);
   animation: loader-bounce 1.4s infinite ease-in-out both;
 }
 
