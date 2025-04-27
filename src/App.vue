@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import Loader from "@/components/shared/Loader.vue";
 </script>
 
 <template>
   <div class="container">
     <router-view></router-view>
+    <Loader />
   </div>
 </template>
 

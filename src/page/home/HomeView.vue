@@ -20,10 +20,10 @@
 import { ref } from 'vue';
 
 import Home from '@/components/homePage/Home.vue'
-import Profile from '@/components/profile/Profile.vue';
 import Loader from "@/components/shared/Loader.vue";
 import {useModalStore} from "@/stores/modal.js";
 import FeedBack from "@/components/form/FeedBack.vue";
+import Profile from "@/components/profile/Profile.vue";
 import ModalWrapper from "@/components/shared/ModalWrapper.vue";
 
 const modalStore = useModalStore();
@@ -44,6 +44,6 @@ const tabs = [
 <style scoped>
 .tabs {
   display: flex;
-  align-items: center;
+ align-items: center;
 }
 </style>
