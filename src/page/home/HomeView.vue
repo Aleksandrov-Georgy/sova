@@ -11,6 +11,7 @@
   <RightModalWrapper>
     <component :is="rightModals[modalStore.currentRightModal]"/>
   </RightModalWrapper>
+  <Loader />
 </template>
 
 <script setup>
@@ -19,6 +20,7 @@ import RightModalWrapper from "@/components/shared/RightModalWrapper.vue";
 import { useModalStore } from "@/stores/modal";
 import FeedBack from "@/components/form/FeedBack.vue";
 import Profile from "@/components/profile/Profile.vue";
+import Loader from "@/components/shared/Loader.vue";
 
 const modalStore = useModalStore();
 
