@@ -1,33 +1,41 @@
-import axios, {AxiosResponse} from "axios";
-import {IProduct} from "@/types/products";
+import axios from "axios";
+import { IProductApiResponse, IProductData} from "@/types/products";
 
 const api = axios.create({
     baseURL: 'https://fakerapi.it/api/v2',
 });
 
-const cacheProducts = new Map<string, IProduct[]>();
+const cacheProducts = new Map<string, IProductData[]>();
 const totalItemsCache = 50;
 
 export class API {
 
-    /** Получить список products
-     * @param quantity кол-во продуктов
-     * @param page № страницы
-     * @return IProduct[] - массив продуктов IProduct[]
-     * */
-    static async getProducts(quantity = 20, page = 1): Promise<IProduct[]> {
-        const url = `products?_quantity=${quantity}&page=${page}`;
+    /**
+     * Получить список продуктов
+     * @param quantity - количество продуктов
+     * @param page - номер страницы
+     * @returns Promise с массивом продуктов
+     */
+    static async getProducts(quantity: number = 20, page: number = 1): Promise<IProductData[]> {
+        const url = `products?_quantity=${quantity}&_page=${page}`;
 
-        if(cacheProducts.size === totalItemsCache) {
+        if (cacheProducts.size >= totalItemsCache) {
             cacheProducts.clear();
         }
 
-        if (cacheProducts.has(url)) {
-            return cacheProducts.get(url) || [];
+        const cachedData = cacheProducts.get(url);
+        if (cachedData) {
+            return cachedData;
         }
 
-        const {data} = await api.get<string, AxiosResponse<IProduct[]>>(url);
-        cacheProducts.set(url, data);
-        return data;
+        try {
+            const response = await api.get<IProductApiResponse>(url);
+
+            const products = response.data.data;
+            cacheProducts.set(url, products);
+            return products;
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 }

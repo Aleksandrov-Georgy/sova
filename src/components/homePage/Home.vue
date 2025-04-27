@@ -2,7 +2,10 @@
   <div class="page-container">
     <div class="content-wrapper">
       <div class="content">
-        <h1>HOME</h1>
+        <Card v-if="productsData?.length > 0" :products="productsData" />
+        <div v-else-if="!config.loading" class="empty-state">
+          Нет данных
+        </div>
       </div>
     </div>
 
@@ -22,29 +25,35 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
+import Card from "@/components/homePage/components/Card.vue";
 import { API } from "@/services/axios";
 import { toast } from "vue3-toastify";
 import { useConfig } from "@/stores/config";
-import type { ComponentSize } from "element-plus";
+import {IProductData} from "@/types/products";
+import {scrollToTop} from "@/utils/scrollTop";
 
 const config = useConfig();
-const size = ref<ComponentSize>('default');
+
+const productsData = ref<IProductData[]>([])
+
 const pageSize = ref(20);
 const currentPage = ref(1);
 const totalItems = ref(1000);
 
 const handleSizeChange = (val: number) => {
   pageSize.value = val;
+  scrollToTop()
 };
 
 const handleCurrentChange = (val: number) => {
   currentPage.value = val;
+  scrollToTop()
 };
 
 const getProducts = async () => {
   try {
     config.setLoading(true);
-    const response = await API.getProducts(pageSize.value, currentPage.value);
+    productsData.value = await API.getProducts(pageSize.value, currentPage.value);
   } catch (err) {
     toast('Ошибка при загрузке данных', { type: 'error' });
   } finally {
@@ -66,7 +75,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   min-height: 90vh;
-  width: 100%;
+  width: 90vw;
 }
 
 .content-wrapper {
@@ -74,15 +83,17 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  width: 100%;
 }
 
 .content {
   flex: 1;
+  width: 100%;
 }
 
 .pagination-footer {
+  background: transparent;
   padding: 16px;
-  background: var(--el-bg-color-page);
   border-top: 1px solid var(--el-border-color-light);
   display: flex;
   justify-content: center;
