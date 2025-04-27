@@ -11,13 +11,13 @@
   <RightModalWrapper>
     <component :is="rightModals[modalStore.currentRightModal]"/>
   </RightModalWrapper>
-  <Loader />
+  <Loader/>
 </template>
 
 <script setup>
 import ModalWrapperWrapper from "@/components/shared/ModalWrapper.vue";
 import RightModalWrapper from "@/components/shared/RightModalWrapper.vue";
-import { useModalStore } from "@/stores/modal";
+import {useModalStore} from "@/stores/modal";
 import FeedBack from "@/components/form/FeedBack.vue";
 import Profile from "@/components/profile/Profile.vue";
 import Loader from "@/components/shared/Loader.vue";
