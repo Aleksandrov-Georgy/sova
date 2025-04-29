@@ -2,13 +2,20 @@ import { defineStore } from 'pinia'
 import {IUser} from "@/types/user";
 
 interface IConfigState {
-    userData: IUser | {}
+    userData: IUser | null
 }
 
 export const useUser = defineStore('userData', {
-    state: (): IConfigState => ({
-        userData: {},
-    }),
+    state: (): IConfigState => {
+        const userDataFromStorage = localStorage.getItem('userData');
+        const initialUserData = userDataFromStorage
+            ? JSON.parse(userDataFromStorage)
+            : {};
+
+        return {
+            userData: initialUserData,
+        }
+    },
     actions: {
         setUser(userData: IUser) {
             this.userData = userData;
