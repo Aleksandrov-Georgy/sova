@@ -1,93 +1,76 @@
-/* Reset and base styles  */
-* {
-	padding: 0px;
-	margin: 0px;
-	border: none;
-}
-
 *,
 *::before,
 *::after {
-	box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-/* Links */
-
-a, a:link, a:visited  {
-    text-decoration: none;
+html {
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
 }
 
-a:hover  {
-    text-decoration: none;
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-/* Common */
-
-aside, nav, footer, header, section, main {
-	display: block;
+::-webkit-scrollbar-thumb {
+    background-color: transparent;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+body {
+    width: 100%;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
     font-size: inherit;
-	font-weight: inherit;
+    font-weight: inherit;
 }
 
-ul, ul li {
-	list-style: none;
-}
-
-img {
-	vertical-align: top;
-}
-
-img, svg {
-	max-width: 100%;
-	height: auto;
-}
-
-address {
-  font-style: normal;
-}
-
-/* Form */
-
-input, textarea, button, select {
-	font-family: inherit;
-    font-size: inherit;
+a {
     color: inherit;
-    background-color: transparent;
+    text-decoration: none;
 }
 
-input::-ms-clear {
-	display: none;
+ul, ol {
+    list-style: none;
 }
 
-button, input[type="submit"] {
-    display: inline-block;
-    box-shadow: none;
-    background-color: transparent;
-    background: none;
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+input, button, textarea, select {
+    font: inherit;
+    border: 1px solid;
+    padding: 0.25em;
+}
+
+button {
     cursor: pointer;
+    background: none;
 }
 
-input:focus, input:active,
-button:focus, button:active {
-    outline: none;
-}
-
-button::-moz-focus-inner {
-	padding: 0;
-	border: 0;
-}
-
-label {
-	cursor: pointer;
+fieldset {
+    border: 1px solid;
+    padding: 0.5em;
+    margin: 0 0 1em;
 }
 
 legend {
-	display: block;
+    padding: 0 0.5em;
 }
 
-input[type='file'] {
-	max-width: 100%;
+input::-ms-clear {
+    display: none;
+}
+
+:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
 }

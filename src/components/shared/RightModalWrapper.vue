@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Close from "@/assets/icon/Close.vue";
+import CloseSvg from "@/assets/icon/CloseSVG.vue";
 import { useModalStore } from "@/stores/modal";
 import {useKeyboard} from "@/utils/composable";
 
@@ -25,7 +25,7 @@ useKeyboard((e: KeyboardEvent) => {
     >
       <Transition name="slide-right">
         <div class="right-modal">
-          <Close class="right-modal__close-icon" @click="closeModal" />
+          <CloseSvg class="right-modal__close-icon" @click="closeModal" />
           <slot/>
         </div>
       </Transition>

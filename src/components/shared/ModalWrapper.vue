@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Close from "@/assets/icon/Close.vue";
+import CloseSvg from "@/assets/icon/CloseSVG.vue";
 import { useModalStore } from "@/stores/modal";
 import {useKeyboard} from "@/utils/composable";
 
@@ -20,7 +20,7 @@ useKeyboard((e: KeyboardEvent) => {
   <Transition name="fade">
     <div v-if="modalStore.isVisibleModal" class="wrapper" @click.self="closeModal">
       <div class="modal">
-        <Close class="modal__close-icon" @click="closeModal"/>
+        <CloseSvg class="modal__close-icon" @click="closeModal"/>
         <slot/>
       </div>
     </div>
@@ -38,6 +38,7 @@ useKeyboard((e: KeyboardEvent) => {
   position: fixed;
   inset: 0;
   z-index: 1000000;
+  overflow: hidden;
 }
 
 .modal {

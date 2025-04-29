@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia'
 
+// Добавлять названия модалок при масштабировании
+type ModalName = 'form' | 'login' | null;
+
 interface ModalState {
     isVisibleModal: boolean;
     isVisibleRightModal: boolean;
-    currentModal: string | null;
+    currentModal: ModalName;
     currentRightModal: string | null;
 }
 
@@ -15,7 +18,7 @@ export const useModalStore = defineStore('modal', {
         currentRightModal: null,
     }),
     actions: {
-        showModal(modalName: string | null = null): void {
+        showModal(modalName: ModalName = null): void {
             this.isVisibleModal = true;
             this.currentModal = modalName;
         },
