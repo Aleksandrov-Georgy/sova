@@ -1,9 +1,20 @@
 <template>
   <header class="header">
-    <div class="feedback" @click="openRightModal('form')">
+    <div
+        v-if="userStore.isAuthenticated && !isMobile"
+        class="feedback"
+        @click="openRightModal('form')"
+    >
       <FeedBackSVG/>
       <span>Обратная связь</span>
     </div>
+
+    <FeedBackSVG
+        v-if="userStore.isAuthenticated && isMobile"
+        class="feedback-icon-mobile"
+        @click="openRightModal('form')"
+    />
+
     <div class="auth-wrapper">
       <UserSVG
           v-if="!userStore.isAuthenticated"
@@ -11,7 +22,9 @@
           @click="openModal('login')"
       />
       <div v-else class="user-info">
-        <span class="user-email">{{ userStore.userData?.email || '' }}</span>
+        <span v-if="!isMobile" class="user-email">
+          {{ userStore.userData?.email || '' }}
+        </span>
         <LogoutSVG class="auth-icon" @click="logout"/>
       </div>
     </div>
@@ -41,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useUser } from '@/stores/user';
 import { useModalStore } from '@/stores/modal';
 import Home from '@/components/homePage/Home.vue';
@@ -61,6 +74,20 @@ type ModalComponents = typeof FeedBack | typeof Login;
 const modalStore = useModalStore();
 const userStore = useUser();
 const activeTab = ref('home');
+const isMobile = ref(false);
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
+
+onMounted(() => {
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkMobile);
+});
 
 const modals: Record<ModalKey, ModalComponents> = {
   form: FeedBack,
@@ -115,8 +142,27 @@ const logout = () => {
   gap: 10px;
 }
 
+.feedback-icon-mobile {
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  cursor: pointer;
+}
+
 .user-info {
   display: flex;
   gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .user-email {
+    display: none;
+  }
+
+  .auth-icon {
+    width: 24px;
+    height: 24px;
+  }
 }
 </style>
