@@ -22,7 +22,7 @@ export const useModalStore = defineStore('modal', {
             this.isVisibleModal = true;
             this.currentModal = modalName;
         },
-        showModalRight(modalName: string | null = null): void {
+        showModalRight(modalName: ModalName = null): void {
             this.isVisibleRightModal = true;
             this.currentRightModal = modalName;
         },

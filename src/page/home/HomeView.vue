@@ -1,5 +1,9 @@
 <template>
   <header class="header">
+    <div class="feedback" @click="openRightModal('form')">
+      <FeedBackSVG/>
+      <span>Обратная связь</span>
+    </div>
     <div class="auth-wrapper">
       <UserSVG
           v-if="!userStore.isAuthenticated"
@@ -29,6 +33,10 @@
     <component :is="modals[modalStore.currentModal as ModalKey]"/>
   </ModalWrapper>
 
+  <RightModalWrapper v-if="modalStore.isVisibleRightModal">
+    <component :is="modals[modalStore.currentRightModal as ModalKey]"/>
+  </RightModalWrapper>
+
   <Loader/>
 </template>
 
@@ -44,6 +52,8 @@ import ModalWrapper from '@/components/shared/ModalWrapper.vue';
 import Loader from '@/components/shared/Loader.vue';
 import UserSVG from '@/assets/icon/UserSVG.vue';
 import LogoutSVG from '@/assets/icon/LogoutSVG.vue';
+import FeedBackSVG from "@/assets/icon/FeedBackSVG.vue";
+import RightModalWrapper from "@/components/shared/RightModalWrapper.vue";
 
 type ModalKey = 'form' | 'login';
 type ModalComponents = typeof FeedBack | typeof Login;
@@ -51,7 +61,6 @@ type ModalComponents = typeof FeedBack | typeof Login;
 const modalStore = useModalStore();
 const userStore = useUser();
 const activeTab = ref('home');
-
 
 const modals: Record<ModalKey, ModalComponents> = {
   form: FeedBack,
@@ -72,6 +81,10 @@ const openModal = (modalName: ModalKey) => {
   modalStore.showModal(modalName);
 };
 
+const openRightModal = (modalName: ModalKey) => {
+  modalStore.showModalRight(modalName);
+}
+
 const logout = () => {
   userStore.clearUser();
   if (activeTab.value === 'profile') {
@@ -91,6 +104,15 @@ const logout = () => {
   right: 20px;
   top: 15px;
   cursor: pointer;
+}
+
+.feedback {
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
 }
 
 .user-info {
