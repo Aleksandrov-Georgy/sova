@@ -1,21 +1,3 @@
-<script setup lang="ts">
-import CloseSvg from "@/assets/icon/CloseSVG.vue";
-import { useModalStore } from "@/stores/modal";
-import {useKeyboard} from "@/utils/composable";
-
-const modalStore = useModalStore();
-
-const closeModal = () => {
-  modalStore.closeRightModal();
-}
-
-useKeyboard((e: KeyboardEvent) => {
-  if (e.key === 'Escape' && modalStore.isVisibleRightModal) {
-    closeModal();
-  }
-});
-</script>
-
 <template>
   <Transition name="fade">
     <div
@@ -23,8 +5,11 @@ useKeyboard((e: KeyboardEvent) => {
         class="wrapper"
         @click.self="closeModal"
     >
-      <Transition name="slide-right">
-        <div class="right-modal">
+      <Transition name="slide">
+        <div
+            v-if="modalStore.isVisibleRightModal"
+            class="right-modal"
+        >
           <CloseSvg class="right-modal__close-icon" @click="closeModal" />
           <slot/>
         </div>
@@ -33,6 +18,24 @@ useKeyboard((e: KeyboardEvent) => {
   </Transition>
 </template>
 
+<script setup lang="ts">
+import CloseSvg from "@/assets/icon/CloseSVG.vue";
+import { useModalStore } from "@/stores/modal";
+import { useKeyboard } from "@/utils/composable";
+
+const modalStore = useModalStore();
+
+const closeModal = () => {
+  modalStore.closeRightModal();
+};
+
+useKeyboard((e: KeyboardEvent) => {
+  if (e.key === 'Escape' && modalStore.isVisibleRightModal) {
+    closeModal();
+  }
+});
+</script>
+
 <style scoped>
 .wrapper {
   width: 100%;
@@ -40,7 +43,7 @@ useKeyboard((e: KeyboardEvent) => {
   position: fixed;
   inset: 0;
   background: var(--background-modal-window);
-  z-index: 1000;
+  z-index: 10;
 }
 
 .right-modal {
@@ -48,13 +51,14 @@ useKeyboard((e: KeyboardEvent) => {
   right: 0;
   top: 0;
   bottom: 0;
-  width: 30%;
+  width: 35%;
   min-width: 300px;
   max-width: 400px;
   background: var(--backround-modal);
   padding: 24px;
   box-shadow: var(--modal-shadow);
   overflow-y: auto;
+  z-index: 100;
 }
 
 .right-modal__close-icon {
@@ -69,10 +73,10 @@ useKeyboard((e: KeyboardEvent) => {
   transform: scale(1.1);
 }
 
-/* Анимации остаются теми же */
+/* Анимация фона */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .fade-enter-from,
@@ -80,16 +84,24 @@ useKeyboard((e: KeyboardEvent) => {
   opacity: 0;
 }
 
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.5, 1);
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
 }
 
-.slide-right-enter-from {
+.slide-enter-from {
   transform: translateX(100%);
 }
 
-.slide-right-leave-to {
+.slide-enter-to {
+  transform: translateX(0);
+}
+
+.slide-leave-active {
+  position: absolute;
+}
+
+.slide-leave-to {
   transform: translateX(100%);
 }
 </style>
