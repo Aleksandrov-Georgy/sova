@@ -1,34 +1,33 @@
-# .
+# Тестовая работа.
 
-This template should help get you started developing with Vue 3 in Vite.
+Это приложение на Vue 3 с поддержкой TypeScript + PINIA.
 
-## Recommended IDE Setup
+## Используемые технологии
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Vue 3** - JavaScript-фреймворк
+- **TypeScript** - Типизация JavaScript
+- **Pinia** - Управления состоянием Vue
+- **Vue Router** - Официальный роутер для Vue
+- **Element Plus** - Библиотека компонентов для Vue 3
+- **Axios** - HTTP-клиент
+- **Docker** - Контейнеризации приложений
 
-## Type Support for `.vue` Imports in TS
+## Запуск приложения через Docker
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+### Требования
+- Установленный Docker
+- Установленный Docker Compose
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+### Инструкция по запуску
+1. Соберите Docker-образ:
+ ```bash
+   docker-compose build
 ```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
+2. Запустите контейнер
+```bash
+   docker-compose up
 ```
+3. Приложение будет доступно по адресу:
+```http://localhost:5173```
 
-### Type-Check, Compile and Minify for Production
 
-```sh
-npm run build
-```
-# sova
